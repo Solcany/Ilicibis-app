@@ -1,0 +1,18 @@
+.video-player {
+	position: absolute;
+	left: 0;
+	right: 0;
+
+	&.video-player-active {
+		display: block;
+		//z-index: 999;
+	}
+
+	&.video-player-inactive {
+		display: none;
+		//z-index: 1;
+
+	}
+}
+
+

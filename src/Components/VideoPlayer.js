@@ -1,7 +1,11 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import useVideoPlayer from "Hooks/useVideoPlayer";
 
-const VideoPlayer = ({src}) => {
+const VideoPlayer = ({src,
+					  className,
+    				  onPlayerProgressUpdate,
+					  isActive=false}) => {
+
   const videoPlayerRef = useRef(null);
 
   const {
@@ -11,22 +15,26 @@ const VideoPlayer = ({src}) => {
     handleOnTimeUpdate,
     handleVideoProgress,
     handleOnLoadedMetadata,
-  } = useVideoPlayer(videoPlayerRef);
+  } = useVideoPlayer(isActive,
+  					 videoPlayerRef);
 
   const { isPlaying, time, progress, speed, isMuted } = playerState;
+
+  useEffect(()=> {
+  	if(progress) {
+    	onPlayerProgressUpdate(progress)
+	}
+  }, [progress])
 
 	return (
       <video
           ref={videoPlayerRef}
           src={src}
-          className=""
-          onLoadedMetadata={handleOnLoadedMetadata}
+          preload="auto"
+          className={className}
+          onLoadedMetadata={()=>handleOnLoadedMetadata()}
           poster=""
-          onTimeUpdate={() => {
-            // update this VideoElement component
-           // handleOnTimeUpdate();
-          }}
-          autoPlay={true}
+          onTimeUpdate={() => handleOnTimeUpdate()}
           title="test"
           muted={true}
         />

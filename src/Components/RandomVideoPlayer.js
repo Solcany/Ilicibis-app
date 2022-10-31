@@ -1,6 +1,9 @@
+import React, { useState } from "react";
 import VideoPlayer from "Components/VideoPlayer"
 import useRandomVideoPlayer from "Hooks/useRandomVideoPlayer";
-import {VIDEO_ERROR_UI_MESSAGES,UNKNOWN_ERROR_UI_MESSAGE,} from "Constants/constants";
+import {VIDEO_ERROR_UI_MESSAGES, UNKNOWN_ERROR_UI_MESSAGE,} from "Constants/constants";
+import "Stylesheets/RandomVideoPlayer.scss"
+import {joinStyles} from "Utils/dev.js"
 
 const ErrorOverlay = ({ error, isVisible }) => {
   return (
@@ -15,6 +18,9 @@ const ErrorOverlay = ({ error, isVisible }) => {
 };
 
 const RandomVideoPlayer = (props) => {
+
+
+  const paths = ["/videos/1.mp4", "/videos/3.mp4"]
 
   // const {
   //   src,
@@ -45,8 +51,54 @@ const RandomVideoPlayer = (props) => {
   //   onLoadStart,
   // } = props;
 
+
+  const getRandomVideoSrc = (srcs) => {
+    const randomIndex = Math.floor(Math.random() * srcs.length)
+    return paths[randomIndex]
+  }
+
+  const [isPlayerOneActive, setIsPlayerOneActive] = useState(true)
+  const [isPlayerTwoActive, setIsPlayerTwoActive] = useState(false)
+  const [playerOneSrc, setPlayerOneSrc] = useState(getRandomVideoSrc(paths))
+  const [playerTwoSrc, setPlayerTwoSrc] = useState(getRandomVideoSrc(paths))
+
+  const handlePlayerOneProgressUpdate = (progress) => {
+      // if(progress > 0.99 && !isPlayerTwoActive) {
+      //   console.log("starting player 2")        
+      //   setIsPlayerTwoActive(true)
+      // } else if(progress >= 1.0 && isPlayerOneActive) {
+      //   setIsPlayerOneActive(false)
+      //   setPlayerOneSrc(getRandomVideoSrc(paths))
+      // }      
+    if(progress >= 1.0 &&
+       isPlayerOneActive &&
+       !isPlayerTwoActive) {
+        console.log("showing player 2")
+        setIsPlayerTwoActive(true)      
+        setIsPlayerOneActive(false)
+        setPlayerOneSrc(getRandomVideoSrc(paths))
+    }       
+  }
+
+  const handlePlayerTwoProgressUpdate = (progress) => {
+    // if(progress > 0.99 && 
+    //    !isPlayerOneActive) {
+    //   console.log("starting player 1")
+    //   setIsPlayerOneActive(true)
+    if(progress >= 1.0 &&
+       isPlayerTwoActive &&
+       !isPlayerOneActive) {
+      console.log("showing player 1")
+      setIsPlayerOneActive(true)      
+      setIsPlayerTwoActive(false)
+      setPlayerTwoSrc(getRandomVideoSrc(paths))
+    } 
+  }
+
+
+
   return (
-      <div className="">
+      <div className="parent">
 {/*        <ErrorOverlay
           isVisible={playerErrorName !== ""}
           error={
@@ -54,8 +106,16 @@ const RandomVideoPlayer = (props) => {
           }
         />
 */} 
-        <VideoPlayer src="/videos/1.mp4"/>
-        <VideoPlayer src="/videos/2.mp4"/>
+
+        <VideoPlayer isActive={isPlayerOneActive} 
+                     className={joinStyles(["video-player", (isPlayerOneActive ? "video-player-active" : "video-player-inactive")])}
+                     onPlayerProgressUpdate={handlePlayerOneProgressUpdate}
+                     src={playerOneSrc}/>
+
+        <VideoPlayer isActive={isPlayerTwoActive} 
+                     className={joinStyles(["video-player", (isPlayerTwoActive ? "video-player-active" : "video-player-inactive")])}
+                     onPlayerProgressUpdate={handlePlayerTwoProgressUpdate}
+                     src={playerTwoSrc}/>
 
       </div>
   );
