@@ -1,8 +1,5 @@
 import React, { useRef } from "react";
-import {
-  VIDEO_ERROR_UI_MESSAGES,
-  UNKNOWN_ERROR_UI_MESSAGE,
-} from "Constants/constants";
+import {VIDEO_ERROR_UI_MESSAGES,UNKNOWN_ERROR_UI_MESSAGE,} from "Constants/constants";
 import useVideoPlayer from "hooks/useVideoPlayer";
 
 const ErrorOverlay = ({ error, isVisible }) => {
@@ -77,8 +74,6 @@ const VideoElement = (props) => {
           onTimeUpdate={() => {
             // update this VideoElement component
             handleOnTimeUpdate();
-            // pass update data to the parent
-            onTimeUpdate(playerState.time);
           }}
           autoPlay={autoplay}
           title={title}
