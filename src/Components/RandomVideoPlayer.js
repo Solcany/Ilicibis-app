@@ -57,8 +57,8 @@ const RandomVideoPlayer = (props) => {
     return paths[randomIndex]
   }
 
-  const [isPlayerOneActive, setIsPlayerOneActive] = useState(true)
-  const [isPlayerTwoActive, setIsPlayerTwoActive] = useState(false)
+  const [isPlayerOnePlaying, setIsPlayerOnePlaying] = useState(true)
+  const [isPlayerTwoPlaying, setIsPlayerTwoPlaying] = useState(false)
   const [playerOneSrc, setPlayerOneSrc] = useState(getRandomVideoSrc(paths))
   const [playerTwoSrc, setPlayerTwoSrc] = useState(getRandomVideoSrc(paths))
 
@@ -71,11 +71,11 @@ const RandomVideoPlayer = (props) => {
       //   setPlayerOneSrc(getRandomVideoSrc(paths))
       // }      
     if(progress >= 1.0 &&
-       isPlayerOneActive &&
-       !isPlayerTwoActive) {
+       isPlayerOnePlaying &&
+       !isPlayerTwoPlaying) {
         console.log("showing player 2")
-        setIsPlayerTwoActive(true)      
-        setIsPlayerOneActive(false)
+        setIsPlayerTwoPlaying(true)      
+        setIsPlayerOnePlaying(false)
         setPlayerOneSrc(getRandomVideoSrc(paths))
     }       
   }
@@ -86,11 +86,11 @@ const RandomVideoPlayer = (props) => {
     //   console.log("starting player 1")
     //   setIsPlayerOneActive(true)
     if(progress >= 1.0 &&
-       isPlayerTwoActive &&
-       !isPlayerOneActive) {
+       !isPlayerOnePlaying &&
+       isPlayerTwoPlaying) {
       console.log("showing player 1")
-      setIsPlayerOneActive(true)      
-      setIsPlayerTwoActive(false)
+      setIsPlayerOnePlaying(false)    
+      setIsPlayerOnePlaying(true)      
       setPlayerTwoSrc(getRandomVideoSrc(paths))
     } 
   }
@@ -107,13 +107,13 @@ const RandomVideoPlayer = (props) => {
         />
 */} 
 
-        <VideoPlayer isActive={isPlayerOneActive} 
-                     className={joinStyles(["video-player", (isPlayerOneActive ? "video-player-active" : "video-player-inactive")])}
+        <VideoPlayer isPlaying={isPlayerOnePlaying} 
+                     className={joinStyles(["video-player", (isPlayerOnePlaying ? "video-player-active" : "video-player-inactive")])}
                      onPlayerProgressUpdate={handlePlayerOneProgressUpdate}
                      src={playerOneSrc}/>
 
-        <VideoPlayer isActive={isPlayerTwoActive} 
-                     className={joinStyles(["video-player", (isPlayerTwoActive ? "video-player-active" : "video-player-inactive")])}
+        <VideoPlayer isPlaying={isPlayerTwoPlaying} 
+                     className={joinStyles(["video-player", (isPlayerTwoPlaying ? "video-player-active" : "video-player-inactive")])}
                      onPlayerProgressUpdate={handlePlayerTwoProgressUpdate}
                      src={playerTwoSrc}/>
 

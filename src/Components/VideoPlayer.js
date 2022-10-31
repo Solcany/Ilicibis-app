@@ -4,7 +4,7 @@ import useVideoPlayer from "Hooks/useVideoPlayer";
 const VideoPlayer = ({src,
 					  className,
     				  onPlayerProgressUpdate,
-					  isActive=false}) => {
+					  isPlaying=false}) => {
 
   const videoPlayerRef = useRef(null);
 
@@ -15,10 +15,10 @@ const VideoPlayer = ({src,
     handleOnTimeUpdate,
     handleVideoProgress,
     handleOnLoadedMetadata,
-  } = useVideoPlayer(isActive,
+  } = useVideoPlayer(isPlaying,
   					 videoPlayerRef);
 
-  const { isPlaying, time, progress, speed, isMuted } = playerState;
+  const progress = playerState.progress;
 
   useEffect(()=> {
   	if(progress) {

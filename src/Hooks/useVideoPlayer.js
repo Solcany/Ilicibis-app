@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
-const useVideoPlayer = (isActive, videoElement) => {
+const useVideoPlayer = (isPlaying, videoElement) => {
   const [autoplayFinished, setAutoplayFinished] = useState(false);
   const [playerErrorName, setPlayerErrorName] = useState("");
 
   const [playerState, setPlayerState] = useState({
-    isPlaying: isActive,
+    isPlaying: isPlaying,
     time: 0,
     progress: 0.0,
     speed: 1,
@@ -41,10 +41,10 @@ const useVideoPlayer = (isActive, videoElement) => {
     })
   };
 
-  const handlePlayerActivated = () => {
+  const updateIsPlaying = () => {
       setPlayerState({
         ...playerState,
-        isPlaying: isActive
+        isPlaying: isPlaying
     });
   }
 
@@ -122,8 +122,8 @@ const useVideoPlayer = (isActive, videoElement) => {
   // };
 
   useEffect(() => {
-    handlePlayerActivated()
-  }, [isActive])
+    updateIsPlaying()
+  }, [isPlaying])
 
   useEffect(() => {
     // is video player initialized?
