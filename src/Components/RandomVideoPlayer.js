@@ -74,8 +74,8 @@ const RandomVideoPlayer = (props) => {
        isPlayerOnePlaying &&
        !isPlayerTwoPlaying) {
         console.log("showing player 2")
-        setIsPlayerTwoPlaying(true)      
         setIsPlayerOnePlaying(false)
+        setIsPlayerTwoPlaying(true)              
         setPlayerOneSrc(getRandomVideoSrc(paths))
     }       
   }
@@ -89,8 +89,8 @@ const RandomVideoPlayer = (props) => {
        !isPlayerOnePlaying &&
        isPlayerTwoPlaying) {
       console.log("showing player 1")
-      setIsPlayerOnePlaying(false)    
-      setIsPlayerOnePlaying(true)      
+      setIsPlayerOnePlaying(true)    
+      setIsPlayerTwoPlaying(false)      
       setPlayerTwoSrc(getRandomVideoSrc(paths))
     } 
   }
