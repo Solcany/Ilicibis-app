@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import useVideoPlayer from "Hooks/useVideoPlayer";
+import {joinStyles} from "Utils/dev.js"
+import "Stylesheets/VideoPlayer.scss"
 
 const VideoPlayer = ({src,
 					  className,
@@ -31,7 +33,7 @@ const VideoPlayer = ({src,
           ref={videoPlayerRef}
           src={src}
           preload="auto"
-          className={className}
+          className={joinStyles(["video-player", className])}
           onLoadedMetadata={()=>handleOnLoadedMetadata()}
           poster=""
           onTimeUpdate={() => handleOnTimeUpdate()}

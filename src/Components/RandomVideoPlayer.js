@@ -1,56 +1,12 @@
 import React, { useState } from "react";
 import VideoPlayer from "Components/VideoPlayer"
-import useRandomVideoPlayer from "Hooks/useRandomVideoPlayer";
 import {VIDEO_ERROR_UI_MESSAGES, UNKNOWN_ERROR_UI_MESSAGE,} from "Constants/constants";
-import "Stylesheets/RandomVideoPlayer.scss"
 import {joinStyles} from "Utils/dev.js"
-
-const ErrorOverlay = ({ error, isVisible }) => {
-  return (
-    <>
-      {isVisible && (
-        <div className="">
-          <p>{error}</p>
-        </div>
-      )}
-    </>
-  );
-};
+import "Stylesheets/RandomVideoPlayer.scss"
 
 const RandomVideoPlayer = (props) => {
-
-
-  const paths = ["/videos/1.mp4", "/videos/3.mp4"]
-
-  // const {
-  //   src,
-  //   poster,
-  //   width,
-  //   height,
-  //   autoplay,
-  //   title,
-  //   controls,
-  //   preload,
-  //   muted,
-  //   playsInline,
-  //   loop,
-  //   duration,
-  //   framesTotal,
-  //   framerate,
-  //   onLoadedMetadata,
-  //   onLoadedData,
-  //   onTimeUpdate,
-  //   onProgress,
-  //   onCanPlay,
-  //   onCanPlayThrough,
-  //   onSeeked,
-  //   onSeeking,
-  //   onEnded,
-  //   onError,
-  //   onWaiting,
-  //   onLoadStart,
-  // } = props;
-
+  
+  const paths = ["/videos/1.mp4"]
 
   const getRandomVideoSrc = (srcs) => {
     const randomIndex = Math.floor(Math.random() * srcs.length)
@@ -95,18 +51,8 @@ const RandomVideoPlayer = (props) => {
     } 
   }
 
-
-
   return (
-      <div className="parent">
-{/*        <ErrorOverlay
-          isVisible={playerErrorName !== ""}
-          error={
-            VIDEO_ERROR_UI_MESSAGES[playerErrorName] || UNKNOWN_ERROR_UI_MESSAGE
-          }
-        />
-*/} 
-
+      <div className="random-video-player">
         <VideoPlayer isPlaying={isPlayerOnePlaying} 
                      className={joinStyles(["video-player", (isPlayerOnePlaying ? "video-player-active" : "video-player-inactive")])}
                      onPlayerProgressUpdate={handlePlayerOneProgressUpdate}
