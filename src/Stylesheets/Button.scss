@@ -1,0 +1,11 @@
+@use "Stylesheets/Constants.scss";
+
+button.button {
+  background-color: black;
+  color: white;
+  padding: Constants.$offset-3 Constants.$offset-4;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-size: 20px;
+  font-family: serif;
+}

@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useContext } from "react";
+// import {AppProvider} from "Contexts/AppContext.js"
+// import AppContext from "Contexts/AppContext.js"
+import ModalCard from "Components/ModalCard";
+import Button from "Components/Button";
+import Header from "Components/Header";
+import RandomVideoPlayer from "Components/RandomVideoPlayer";
+import {
+  VIDEO_ERROR_UI_MESSAGES,
+  UNKNOWN_ERROR_UI_MESSAGE,
+} from "Constants/constants";
+import "Stylesheets/Reset.scss";
+import "Stylesheets/App.scss";
 
-function App() {
+const App = () => {
+  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isAppMuted, setIsAppMuted] = useState(true);
+
+  // const {toggleMute, isAppMuted} = useContext(AppContext)
+  const handleMuteButtonClick = () => {
+    setIsModalVisible(false);
+    setIsAppMuted(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Header className="header">I LICK I CLICK I BITE I SPIT</Header>
+      <section className="ilicibis">
+        <ModalCard isVisible={isModalVisible} className="modal-unmute-app">
+          <Button onClick={handleMuteButtonClick}> start </Button>
+        </ModalCard>
+        <RandomVideoPlayer isMuted={isAppMuted} />
+      </section>
     </div>
   );
-}
+};
 
 export default App;

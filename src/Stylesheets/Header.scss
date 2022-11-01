@@ -1,0 +1,14 @@
+@use "Stylesheets/Constants.scss";
+
+header.header {
+  width: 100%;
+  z-index: 9999;
+
+  h1 {
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    color: black;
+  }
+}
