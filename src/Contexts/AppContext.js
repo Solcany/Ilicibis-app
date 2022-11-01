@@ -5,7 +5,7 @@ const AppContext = createContext();
 const reducer = (state, action) => {
 	switch (action.type) {
 	    case "TOGGLE_MUTE": {
-	      return { ...state, isAppMuted: !state.isAppMuted }; // true or false
+	      return { ...state, isAppMuted: false }; // true or false
 	    }
 	}
 }

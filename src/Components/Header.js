@@ -1,9 +1,9 @@
 import "Stylesheets/Header.scss";
 
-const Header = () => {
+const Header = ({children}) => {
 	return(
 		<header className="header">
-			<h1> Header </h1>
+			<h1> {children} </h1>
 		</header>
 	)
 }

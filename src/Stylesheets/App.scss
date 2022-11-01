@@ -3,14 +3,15 @@
 .app {
 	width: 100vw;
 	height: 100vh;
-	background-color: black;
+	background-color: #39c1d4;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 
 	.header {
-
+		padding-top: Constants.$offset-3;
 	}
+
 	section.ilicibis {
 		display: flex;
 		flex-direction: column;
@@ -23,6 +24,10 @@
 
 		@include Constants.breakpoint-orientation-vertical() {
 			padding: 0 Constants.$offset-1;
+		}
+
+		.modal-unmute-app {
+
 		}
 	}
 }

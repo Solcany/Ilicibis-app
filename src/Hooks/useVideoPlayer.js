@@ -127,24 +127,25 @@ const useVideoPlayer = (isPlaying, videoElement) => {
 
   useEffect(() => {
     // is video player initialized?
-      if (videoElement.current.play && 
-          playerState.isPlaying) {
-        // play video
-        let playPromise = videoElement.current.play();
-        // is promise supported?
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              // video is playing
-              setPlayerErrorName("");
-            })
-            .catch(function (error) {
-              //console.log(error.message)
-              setPlayerErrorName(error.name);
-            });
-        }
-      } else {
-        videoElement.current.pause();
+      if (videoElement.current.play && playerState.isPlaying) {
+        // console.log("playing")
+        // // play video
+        // let playPromise = videoElement.current.play();
+        // // is promise supported?
+        // if (playPromise !== undefined) {
+        //   playPromise
+        //     .then(() => {
+        //       console.log("play success!")
+        //       // video is playing
+        //       setPlayerErrorName("");
+        //     })
+        //     .catch(function (error) {
+        //       console.log(error)
+        //       setPlayerErrorName(error.name);
+        //     });
+        // }
+      // } else {
+        //videoElement.current.pause();
       }
   }, [playerState.isPlaying]);
 

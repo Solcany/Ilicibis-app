@@ -1,5 +1,6 @@
-import {useState} from 'react';
-import {AppProvider} from "Contexts/AppContext.js"
+import {useState, useContext} from 'react';
+// import {AppProvider} from "Contexts/AppContext.js"
+// import AppContext from "Contexts/AppContext.js"
 import ModalCard from "Components/ModalCard"
 import Button from "Components/Button";
 import Header from "Components/Header"
@@ -10,23 +11,25 @@ import 'Stylesheets/App.scss';
 
 const App = () => {
   const [isModalVisible, setIsModalVisible] = useState(true)
+  const [isAppMuted, setIsAppMuted] = useState(true)
 
+  // const {toggleMute, isAppMuted} = useContext(AppContext)
   const handleMuteButtonClick = () => {
-    setIsModalVisible(false)
+    setIsModalVisible(false)  
+    setIsAppMuted(false)
   }
 
   return (
-    <AppProvider>
       <div className="app">
-        <ModalCard isVisible={isModalVisible}>
-          <Button onClick={handleMuteButtonClick}> Watch </Button>
-        </ModalCard>
-        <Header className="header"/>
+        <Header className="header">I LICK I CLICK I BITE I SPIT</Header>
         <section className="ilicibis">
-          <RandomVideoPlayer/>
+          <ModalCard isVisible={isModalVisible}
+                     className="modal-unmute-app">
+            <Button onClick={handleMuteButtonClick}> start </Button>
+          </ModalCard>
+          <RandomVideoPlayer isMuted={isAppMuted}/>
         </section>
       </div>
-    </AppProvider>
   );
 }
 

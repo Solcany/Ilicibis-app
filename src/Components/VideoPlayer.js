@@ -6,6 +6,7 @@ import "Stylesheets/VideoPlayer.scss"
 const VideoPlayer = ({src,
 					  className,
     				  onPlayerProgressUpdate,
+    				  isMuted=true,
 					  isPlaying=false}) => {
 
   const videoPlayerRef = useRef(null);
@@ -36,9 +37,10 @@ const VideoPlayer = ({src,
           className={joinStyles(["video-player", className])}
           onLoadedMetadata={()=>handleOnLoadedMetadata()}
           poster=""
+          autoPlay={isPlaying}
           onTimeUpdate={() => handleOnTimeUpdate()}
-          title="test"
-          muted={true}
+          // title="ilicibis player"
+          muted={isMuted}
         />
 	)
 }
