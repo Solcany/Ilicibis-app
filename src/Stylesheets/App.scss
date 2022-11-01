@@ -1,33 +1,32 @@
 @use "Stylesheets/Constants.scss";
 
 .app {
-	width: 100vw;
-	height: 100vh;
-	background-color: #39c1d4;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #39c1d4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-	.header {
-		padding-top: Constants.$offset-3;
-	}
+  .header {
+    padding-top: Constants.$offset-3;
+  }
 
-	section.ilicibis {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;		
-		width: 100%;
-		height: 100%;
-		box-sizing: border-box;
-		padding: 0 Constants.$offset-7;
+  section.ilicibis {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0 Constants.$offset-7;
 
-		@include Constants.breakpoint-orientation-vertical() {
-			padding: 0 Constants.$offset-1;
-		}
+    @include Constants.breakpoint-orientation-vertical() {
+      padding: 0 Constants.$offset-1;
+    }
 
-		.modal-unmute-app {
-
-		}
-	}
+    .modal-unmute-app {
+    }
+  }
 }

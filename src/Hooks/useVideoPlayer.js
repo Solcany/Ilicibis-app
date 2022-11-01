@@ -9,12 +9,12 @@ const useVideoPlayer = (isPlaying, videoElement) => {
     time: 0,
     progress: 0.0,
     speed: 1,
-    isMuted: true, 
+    isMuted: true,
   });
 
   const [currentVideoMetadata, setCurrentVideoMetadata] = useState({
     duration: null,
-  })
+  });
 
   // const togglePlay = () => {
   //   setPlayerState({
@@ -38,15 +38,15 @@ const useVideoPlayer = (isPlaying, videoElement) => {
     setCurrentVideoMetadata({
       ...currentVideoMetadata,
       duration: videoElement.current.duration,
-    })
+    });
   };
 
   const updateIsPlaying = () => {
-      setPlayerState({
-        ...playerState,
-        isPlaying: isPlaying
+    setPlayerState({
+      ...playerState,
+      isPlaying: isPlaying,
     });
-  }
+  };
 
   // const isVideoEnded = (endTime) => {
   //   const currentTime = videoElement.current.currentTime;
@@ -59,7 +59,8 @@ const useVideoPlayer = (isPlaying, videoElement) => {
 
   const handleOnTimeUpdate = () => {
     const time = videoElement.current.currentTime;
-    const progress = videoElement.current.currentTime / videoElement.current.duration;
+    const progress =
+      videoElement.current.currentTime / videoElement.current.duration;
     /* Pause the autoplayed video when clip is over,
       if the video isn't a clip play the whole video */
     // if (
@@ -87,15 +88,14 @@ const useVideoPlayer = (isPlaying, videoElement) => {
     //   });
     // } else {
 
-      if(time && progress) {
-        setPlayerState({
-            ...playerState,
-          time,
-          progress,
-        });
-      }
+    if (time && progress) {
+      setPlayerState({
+        ...playerState,
+        time,
+        progress,
+      });
+    }
     // }
-
 
     // }
   };
@@ -122,31 +122,31 @@ const useVideoPlayer = (isPlaying, videoElement) => {
   // };
 
   useEffect(() => {
-    updateIsPlaying()
-  }, [isPlaying])
+    updateIsPlaying();
+  }, [isPlaying]);
 
   useEffect(() => {
     // is video player initialized?
-      if (videoElement.current.play && playerState.isPlaying) {
-        // console.log("playing")
-        // // play video
-        // let playPromise = videoElement.current.play();
-        // // is promise supported?
-        // if (playPromise !== undefined) {
-        //   playPromise
-        //     .then(() => {
-        //       console.log("play success!")
-        //       // video is playing
-        //       setPlayerErrorName("");
-        //     })
-        //     .catch(function (error) {
-        //       console.log(error)
-        //       setPlayerErrorName(error.name);
-        //     });
-        // }
+    if (videoElement.current.play && playerState.isPlaying) {
+      // console.log("playing")
+      // // play video
+      // let playPromise = videoElement.current.play();
+      // // is promise supported?
+      // if (playPromise !== undefined) {
+      //   playPromise
+      //     .then(() => {
+      //       console.log("play success!")
+      //       // video is playing
+      //       setPlayerErrorName("");
+      //     })
+      //     .catch(function (error) {
+      //       console.log(error)
+      //       setPlayerErrorName(error.name);
+      //     });
+      // }
       // } else {
-        //videoElement.current.pause();
-      }
+      //videoElement.current.pause();
+    }
   }, [playerState.isPlaying]);
 
   // useEffect(() => {

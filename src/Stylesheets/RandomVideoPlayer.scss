@@ -1,20 +1,18 @@
 @use "Stylesheets/Constants.scss";
 
 .random-video-player {
-	width: 100%;
-	position: relative;
-	
-	.video-player {
-		width: 100%;
+  width: 100%;
+  position: relative;
 
-		&.video-player-active {
-			display: block;
-		}
+  .video-player {
+    width: 100%;
 
-		&.video-player-inactive {
-			display: none;
-		}
-	}
+    &.video-player-active {
+      display: block;
+    }
+
+    &.video-player-inactive {
+      display: none;
+    }
+  }
 }
-
-

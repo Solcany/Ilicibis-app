@@ -1,20 +1,20 @@
 .modal-card-wrapper {
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	z-index: 5;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-	.modal-card-content {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(57, 193, 212, 0.85);
-	}
+  .modal-card-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(57, 193, 212, 0.85);
+  }
 }

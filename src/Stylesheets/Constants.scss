@@ -6,15 +6,15 @@ $offset-5: 64px;
 $offset-6: 90px;
 $offset-7: 128px;
 
-$breakpoint-orientation-vertical: 'screen and (orientation: portrait)' !default;
+$breakpoint-orientation-vertical: "screen and (orientation: portrait)" !default;
 
 @mixin breakpoint-not-phone() {
-    @media (min-width: #{$breakpoint-not-small}) {
-        @content;
-    }
+  @media (min-width: #{$breakpoint-not-small}) {
+    @content;
+  }
 }
 @mixin breakpoint-orientation-vertical() {
-    @media (orientation: portrait) {
-        @content;
-    }
+  @media (orientation: portrait) {
+    @content;
+  }
 }
