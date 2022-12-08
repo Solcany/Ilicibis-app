@@ -34,15 +34,24 @@ const VideoPlayer = ({
     updateIsPlaying(isPlaying)
   }, [isPlaying])
 
+  const handleOnClick = () => {
+    if(playerState.isPlaying) {
+      updateIsPlaying(false)
+    } else {
+      updateIsPlaying(true)
+    }
+  }
+
   return (
     <video
       ref={videoPlayerRef}
+      onClick={() => handleOnClick()}
+      onLoadedMetadata={() => handleOnLoadedMetadata()}
+      onTimeUpdate={() => handleOnTimeUpdate()}         
       src={src}
       autoPlay={false}    
       muted={isMuted}        
       preload="auto"
-      onLoadedMetadata={() => handleOnLoadedMetadata()}
-      onTimeUpdate={() => handleOnTimeUpdate()}      
       className={joinStyles(["video-player", className])}      
       // title="ilicibis player"
     />

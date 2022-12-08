@@ -23,12 +23,13 @@ const App = () => {
 
   return (
     <div className="app">
-      <Header className="header">I LICK I CLICK I BITE I SPIT</Header>
       <section className="ilicibis">
         <ModalCard isVisible={isModalVisible} className="modal-unmute-app">
+          {/*<Header className="header">I LICK I CLICK I BITE I SPIT</Header>*/}
+
           <Button onClick={handleMuteButtonClick}> start </Button>
         </ModalCard>
-         <RandomVideoPlayer isActive={!isModalVisible} isMuted={isAppMuted}/>
+         <RandomVideoPlayer isActive={!isModalVisible} isMuted={true}/>
       </section>
     </div>
   );

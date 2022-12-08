@@ -128,7 +128,6 @@ const useVideoPlayer = (videoElementRef) => {
   useEffect(() => {
     // is video player initialized?
     if (playerState.isPlaying && videoElementRef.current.play ) {
-      console.log("is playing true")
       // // play video
       let playPromise = videoElementRef.current.play();
       // // is promise supported?
@@ -136,8 +135,6 @@ const useVideoPlayer = (videoElementRef) => {
         playPromise
           .then(() => {
             console.log("playing!")
-            // video is playing
-            //setPlayerErrorName("");
           })
           .catch(function (error) {
             console.log(error)

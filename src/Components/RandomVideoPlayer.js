@@ -12,7 +12,9 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   const [isPlayerOnePlaying, setIsPlayerOnePlaying] = useState(false);
   const [isPlayerTwoPlaying, setIsPlayerTwoPlaying] = useState(false);
   const [playerOnePath, setPlayerOnePath] = useState("");
+  const [isPlayerOnePathSet, setIsPlayerOnePathSet] = useState(false);
   const [playerTwoPath, setPlayerTwoPath] = useState("");
+  const [isPlayerTwoPathSet, setIsPlayerTwoPathSet] = useState(false);  
   const [videoPaths, setVideoPaths] = useState([]);
 
   const getVideoPaths = () => {
@@ -38,31 +40,34 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   };
 
   const handlePlayerOneProgressUpdate = (progress) => {
-    // if(progress > 0.99 && !isPlayerTwoActive) {
-    //   console.log("starting player 2")
-    //   setIsPlayerTwoActive(true)
-    // } else if(progress >= 1.0 && isPlayerOneActive) {
-    //   setIsPlayerOneActive(false)
-    //   setPlayerOneSrc(getRandomVideoSrc(paths))
-    // }
+    if (progress > 0.5 && !isPlayerTwoPathSet) {
+      // start loading the other video when the first is 50% finished
+      setPlayerTwoPath(getRandomVideoPath(videoPaths))
+      setIsPlayerTwoPathSet(true);
+    }
+
     if (progress >= 1.0 && isPlayerOnePlaying && !isPlayerTwoPlaying) {
+      // show the other player     
       console.log("showing player 2");
       setIsPlayerOnePlaying(false);
       setIsPlayerTwoPlaying(true);
-      setPlayerOnePath(getRandomVideoPath(videoPaths));
+      setIsPlayerTwoPathSet(false);
     }
   };
 
   const handlePlayerTwoProgressUpdate = (progress) => {
-    // if(progress > 0.99 &&
-    //    !isPlayerOneActive) {
-    //   console.log("starting player 1")
-    //   setIsPlayerOneActive(true)
+    if (progress > 0.5 && !isPlayerOnePathSet) {
+      // start loading the other video when the first is 50% finished      
+      setPlayerOnePath(getRandomVideoPath(videoPaths));
+      setIsPlayerOnePathSet(true);      
+    }
+
     if (progress >= 1.0 && !isPlayerOnePlaying && isPlayerTwoPlaying) {
+      // show the other player           
       console.log("showing player 1");
       setIsPlayerOnePlaying(true);
       setIsPlayerTwoPlaying(false);
-      setPlayerTwoPath(getRandomVideoPath(videoPaths));
+      setIsPlayerOnePathSet(false);      
     }
   };
 
@@ -71,52 +76,45 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   }, []);
 
   useEffect(() => {
+    // initiate the first video player
     if (videoPaths.length && videoPaths.length > 0) {
       setPlayerOnePath(getRandomVideoPath(videoPaths));
-      setPlayerTwoPath(getRandomVideoPath(videoPaths));
     }
   }, [videoPaths]);
 
-  // start the first video
   useEffect(() => {
-    console.log("initi")
+  // activate the video player, play the first video    
     if(isActive) {
-      console.log("actvie true")
-
       setIsPlayerOnePlaying(true)
     }
   }, [isActive])
 
   return (
     <div className="random-video-player">
-      {playerOnePath.length > 0 && playerTwoPath.length > 0 && (
-        <>
-          <VideoPlayer
-            isPlaying={isPlayerOnePlaying}
-            isMuted={isMuted}
-            className={joinStyles([
-              "video-player",
-              isPlayerOnePlaying
-                ? "video-player-active"
-                : "video-player-inactive",
-            ])}
-            onPlayerProgressUpdate={handlePlayerOneProgressUpdate}
-            src={playerOnePath}
-          />
-          <VideoPlayer
-            isPlaying={isPlayerTwoPlaying}
-            isMuted={isMuted}
-            className={joinStyles([
-              "video-player",
-              isPlayerTwoPlaying
-                ? "video-player-active"
-                : "video-player-inactive",
-            ])}
-            onPlayerProgressUpdate={handlePlayerTwoProgressUpdate}
-            src={playerTwoPath}
-          />
-        </>
-      )}
+      <VideoPlayer
+        isPlaying={isPlayerOnePlaying}
+        isMuted={isMuted}
+        className={joinStyles([
+          "video-player",
+          isPlayerOnePlaying
+            ? "video-player-active"
+            : "video-player-inactive",
+        ])}
+        onPlayerProgressUpdate={handlePlayerOneProgressUpdate}
+        src={playerOnePath}
+      />
+      <VideoPlayer
+        isPlaying={isPlayerTwoPlaying}
+        isMuted={isMuted}
+        className={joinStyles([
+          "video-player",
+          isPlayerTwoPlaying
+            ? "video-player-active"
+            : "video-player-inactive",
+        ])}
+        onPlayerProgressUpdate={handlePlayerTwoProgressUpdate}
+        src={playerTwoPath}
+      />
     </div>
   );
 };
