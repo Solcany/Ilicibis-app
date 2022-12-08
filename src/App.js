@@ -16,7 +16,6 @@ const App = () => {
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [isAppMuted, setIsAppMuted] = useState(true);
 
-  // const {toggleMute, isAppMuted} = useContext(AppContext)
   const handleMuteButtonClick = () => {
     setIsModalVisible(false);
     setIsAppMuted(false);
@@ -29,7 +28,7 @@ const App = () => {
         <ModalCard isVisible={isModalVisible} className="modal-unmute-app">
           <Button onClick={handleMuteButtonClick}> start </Button>
         </ModalCard>
-        <RandomVideoPlayer isMuted={isAppMuted} />
+         <RandomVideoPlayer isActive={!isModalVisible} isMuted={isAppMuted}/>
       </section>
     </div>
   );

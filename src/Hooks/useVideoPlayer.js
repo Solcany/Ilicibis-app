@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
-const useVideoPlayer = (isPlaying, videoElement) => {
+const useVideoPlayer = (videoElementRef) => {
   const [autoplayFinished, setAutoplayFinished] = useState(false);
   const [playerErrorName, setPlayerErrorName] = useState("");
 
   const [playerState, setPlayerState] = useState({
-    isPlaying: isPlaying,
+    isPlaying: false,
     time: 0,
     progress: 0.0,
     speed: 1,
@@ -37,11 +37,15 @@ const useVideoPlayer = (isPlaying, videoElement) => {
   const handleOnLoadedMetadata = () => {
     setCurrentVideoMetadata({
       ...currentVideoMetadata,
-      duration: videoElement.current.duration,
+      duration: videoElementRef.current.duration,
     });
   };
 
-  const updateIsPlaying = () => {
+  const handleOnCanPlay = () => {
+
+  }
+
+  const updateIsPlaying = (isPlaying) => {
     setPlayerState({
       ...playerState,
       isPlaying: isPlaying,
@@ -58,9 +62,9 @@ const useVideoPlayer = (isPlaying, videoElement) => {
   // };
 
   const handleOnTimeUpdate = () => {
-    const time = videoElement.current.currentTime;
+    const time = videoElementRef.current.currentTime;
     const progress =
-      videoElement.current.currentTime / videoElement.current.duration;
+      videoElementRef.current.currentTime / videoElementRef.current.duration;
     /* Pause the autoplayed video when clip is over,
       if the video isn't a clip play the whole video */
     // if (
@@ -122,30 +126,26 @@ const useVideoPlayer = (isPlaying, videoElement) => {
   // };
 
   useEffect(() => {
-    updateIsPlaying();
-  }, [isPlaying]);
-
-  useEffect(() => {
     // is video player initialized?
-    if (videoElement.current.play && playerState.isPlaying) {
-      // console.log("playing")
+    if (playerState.isPlaying && videoElementRef.current.play ) {
+      console.log("is playing true")
       // // play video
-      // let playPromise = videoElement.current.play();
+      let playPromise = videoElementRef.current.play();
       // // is promise supported?
-      // if (playPromise !== undefined) {
-      //   playPromise
-      //     .then(() => {
-      //       console.log("play success!")
-      //       // video is playing
-      //       setPlayerErrorName("");
-      //     })
-      //     .catch(function (error) {
-      //       console.log(error)
-      //       setPlayerErrorName(error.name);
-      //     });
-      // }
-      // } else {
-      //videoElement.current.pause();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log("playing!")
+            // video is playing
+            //setPlayerErrorName("");
+          })
+          .catch(function (error) {
+            console.log(error)
+            setPlayerErrorName(error.name);
+          });
+      }
+    } else {
+      videoElementRef.current.pause();
     }
   }, [playerState.isPlaying]);
 
@@ -171,6 +171,7 @@ const useVideoPlayer = (isPlaying, videoElement) => {
     // playerErrorName,
     // togglePlay,
     handleOnTimeUpdate,
+    updateIsPlaying,
     // handleVideoProgress,
     handleOnLoadedMetadata,
   };

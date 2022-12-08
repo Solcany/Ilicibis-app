@@ -8,8 +8,8 @@ import { joinStyles } from "Utils/dev.js";
 import "Stylesheets/RandomVideoPlayer.scss";
 import { assert } from "Utils/error.js";
 
-const RandomVideoPlayer = ({ isMuted }) => {
-  const [isPlayerOnePlaying, setIsPlayerOnePlaying] = useState(true);
+const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
+  const [isPlayerOnePlaying, setIsPlayerOnePlaying] = useState(false);
   const [isPlayerTwoPlaying, setIsPlayerTwoPlaying] = useState(false);
   const [playerOnePath, setPlayerOnePath] = useState("");
   const [playerTwoPath, setPlayerTwoPath] = useState("");
@@ -76,6 +76,16 @@ const RandomVideoPlayer = ({ isMuted }) => {
       setPlayerTwoPath(getRandomVideoPath(videoPaths));
     }
   }, [videoPaths]);
+
+  // start the first video
+  useEffect(() => {
+    console.log("initi")
+    if(isActive) {
+      console.log("actvie true")
+
+      setIsPlayerOnePlaying(true)
+    }
+  }, [isActive])
 
   return (
     <div className="random-video-player">

@@ -16,10 +16,11 @@ const VideoPlayer = ({
     playerState,
     playerErrorName,
     togglePlay,
+    updateIsPlaying,
     handleOnTimeUpdate,
     handleVideoProgress,
     handleOnLoadedMetadata,
-  } = useVideoPlayer(isPlaying, videoPlayerRef);
+  } = useVideoPlayer(videoPlayerRef);
 
   const progress = playerState.progress;
 
@@ -29,18 +30,21 @@ const VideoPlayer = ({
     }
   }, [progress]);
 
+  useEffect(() => {
+    updateIsPlaying(isPlaying)
+  }, [isPlaying])
+
   return (
     <video
       ref={videoPlayerRef}
       src={src}
+      autoPlay={false}    
+      muted={isMuted}        
       preload="auto"
-      className={joinStyles(["video-player", className])}
       onLoadedMetadata={() => handleOnLoadedMetadata()}
-      poster=""
-      autoPlay={isPlaying}
-      onTimeUpdate={() => handleOnTimeUpdate()}
+      onTimeUpdate={() => handleOnTimeUpdate()}      
+      className={joinStyles(["video-player", className])}      
       // title="ilicibis player"
-      muted={isMuted}
     />
   );
 };
