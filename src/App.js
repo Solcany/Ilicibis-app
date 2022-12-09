@@ -1,29 +1,32 @@
 import { useState, useContext } from "react";
 import ModalCard from "Components/ModalCard";
-import Button from "Components/Button";
-import Header from "Components/Header";
+import ButtonCard from "Components/ButtonCard";
 import RandomVideoPlayer from "Components/RandomVideoPlayer";
 import "Stylesheets/Reset.scss";
 import "Stylesheets/App.scss";
 
 const App = () => {
-  const [isModalVisible, setIsModalVisible] = useState(true);
-  const [isAppMuted, setIsAppMuted] = useState(true);
+  const [isPlayerActive, setIsPlayerActive] = useState(false);
 
   const handleMuteButtonClick = () => {
-    setIsModalVisible(false);
-    setIsAppMuted(false);
+    setIsPlayerActive(true);
   };
 
   return (
     <div className="app">
       <section className="ilicibis">
-        <ModalCard isVisible={isModalVisible} className="modal-unmute-app">
-          {/*<Header className="header">I LICK I CLICK I BITE I SPIT</Header>*/}
-
-          <Button onClick={handleMuteButtonClick}> start </Button>
+        <ModalCard isVisible={!isPlayerActive} className="modal-unmute-app">        
+          <ButtonCard 
+            className="button_card"
+            onClick={handleMuteButtonClick}> 
+            <div className="content">
+              <img className="triangle_img" src="svg/triangle.svg"/>
+              <img className="logo_img" src="svg/logo.svg"/>
+              <img className="triangle_img" src="svg/triangle.svg"/>
+            </div> 
+          </ButtonCard>
         </ModalCard>
-         <RandomVideoPlayer isActive={!isModalVisible} isMuted={true}/>
+         <RandomVideoPlayer isActive={isPlayerActive} isMuted={false}/>
       </section>
     </div>
   );
