@@ -1,6 +1,4 @@
 import { useState, useContext } from "react";
-// import {AppProvider} from "Contexts/AppContext.js"
-// import AppContext from "Contexts/AppContext.js"
 import ModalCard from "Components/ModalCard";
 import Button from "Components/Button";
 import Header from "Components/Header";

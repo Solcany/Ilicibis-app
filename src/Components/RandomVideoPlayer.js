@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import useToggleFullscreen from "Hooks/useToggleFullscreen"
 import VideoPlayer from "Components/VideoPlayer";
 import {
   VIDEO_ERROR_UI_MESSAGES,
@@ -16,6 +17,8 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   const [playerTwoPath, setPlayerTwoPath] = useState("");
   const [isPlayerTwoPathSet, setIsPlayerTwoPathSet] = useState(false);  
   const [videoPaths, setVideoPaths] = useState([]);
+
+  const {fullscreenRef, toggleFullscreen} = useToggleFullscreen()
 
   const getVideoPaths = () => {
     fetch("data/videos.json", {
@@ -71,6 +74,13 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
     }
   };
 
+  const handleOnClick = (event) => {
+    // set the player to fullscreen on double click
+     if(event.detail == 2) {
+      toggleFullscreen()
+    }
+  }
+
   useEffect(() => {
     getVideoPaths();
   }, []);
@@ -90,7 +100,10 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   }, [isActive])
 
   return (
-    <div className="random-video-player">
+    <div 
+      className="random-video-player"
+      ref={fullscreenRef}
+      onClick={(e) => handleOnClick(e)}>
       <VideoPlayer
         isPlaying={isPlayerOnePlaying}
         isMuted={isMuted}
