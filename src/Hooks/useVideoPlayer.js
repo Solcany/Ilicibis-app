@@ -13,26 +13,8 @@ const useVideoPlayer = (videoElementRef) => {
   });
 
   const [currentVideoMetadata, setCurrentVideoMetadata] = useState({
-    duration: null,
+    duration: 0.0,
   });
-
-  // const togglePlay = () => {
-  //   setPlayerState({
-  //     ...playerState,
-  //     isPlaying: !playerState.isPlaying,
-  //   });
-  // };
-
-  // const setVideoTime = (time) => {
-  //   videoElement.current.currentTime = time;
-  //   const progress = time / videoElement.current.duration;
-
-  //   setPlayerState({
-  //     ...playerState,
-  //     time: time,
-  //     progress: progress,
-  //   });
-  // };
 
   const handleOnLoadedMetadata = () => {
     setCurrentVideoMetadata({
@@ -41,25 +23,12 @@ const useVideoPlayer = (videoElementRef) => {
     });
   };
 
-  const handleOnCanPlay = () => {
-
-  }
-
   const updateIsPlaying = (isPlaying) => {
     setPlayerState({
       ...playerState,
       isPlaying: isPlaying,
     });
   };
-
-  // const isVideoEnded = (endTime) => {
-  //   const currentTime = videoElement.current.currentTime;
-  //   if (currentTime >= endTime) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
 
   const handleOnTimeUpdate = () => {
     const time = videoElementRef.current.currentTime;

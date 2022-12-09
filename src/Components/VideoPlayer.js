@@ -25,25 +25,27 @@ const VideoPlayer = ({
   const progress = playerState.progress;
 
   useEffect(() => {
+    // pass the video player progress to the parent
     if (progress) {
       onPlayerProgressUpdate(progress);
     }
   }, [progress]);
 
   useEffect(() => {
+    // video player can be controlled via parent
     updateIsPlaying(isPlaying)
   }, [isPlaying])
 
-  const handleOnClick = (event) => {
-    if(event.detail == 1) {
-      console.log(event.detail)
-      if(playerState.isPlaying) {
-        updateIsPlaying(false)
-      } else {
-        updateIsPlaying(true)
-      }
-    }
-  }
+  // const handleOnClick = (event) => {
+  //   if(event.detail == 1) {
+  //     console.log(event.detail)
+  //     if(playerState.isPlaying) {
+  //       updateIsPlaying(false)
+  //     } else {
+  //       updateIsPlaying(true)
+  //     }
+  //   }
+  // }
 
   return (
     <video
@@ -55,7 +57,6 @@ const VideoPlayer = ({
       muted={isMuted}        
       preload="auto"
       className={joinStyles(["video-player", className])}      
-      // title="ilicibis player"
     />
   );
 };

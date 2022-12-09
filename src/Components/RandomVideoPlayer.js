@@ -16,6 +16,7 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   const [isPlayerOnePathSet, setIsPlayerOnePathSet] = useState(false);
   const [playerTwoPath, setPlayerTwoPath] = useState("");
   const [isPlayerTwoPathSet, setIsPlayerTwoPathSet] = useState(false);  
+  const [activePlayer, setActivePlayer] = useState(1);
   const [videoPaths, setVideoPaths] = useState([]);
 
   const {fullscreenRef, toggleFullscreen} = useToggleFullscreen()
@@ -48,12 +49,12 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
       setPlayerTwoPath(getRandomVideoPath(videoPaths))
       setIsPlayerTwoPathSet(true);
     }
-
     if (progress >= 1.0 && isPlayerOnePlaying && !isPlayerTwoPlaying) {
       // show the other player     
       console.log("showing player 2");
       setIsPlayerOnePlaying(false);
       setIsPlayerTwoPlaying(true);
+      setActivePlayer(2)            
       setIsPlayerTwoPathSet(false);
     }
   };
@@ -64,18 +65,25 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
       setPlayerOnePath(getRandomVideoPath(videoPaths));
       setIsPlayerOnePathSet(true);      
     }
-
     if (progress >= 1.0 && !isPlayerOnePlaying && isPlayerTwoPlaying) {
       // show the other player           
       console.log("showing player 1");
+      setIsPlayerTwoPlaying(false);      
       setIsPlayerOnePlaying(true);
-      setIsPlayerTwoPlaying(false);
+      setActivePlayer(1)
       setIsPlayerOnePathSet(false);      
     }
   };
 
   const handleOnClick = (event) => {
-    // set the player to fullscreen on double click
+     if(event.detail == 1) {
+      if(activePlayer == 1) {
+        setIsPlayerOnePlaying(prevState => !prevState)
+      } else {
+        setIsPlayerTwoPlaying(prevState => !prevState)
+      }
+     }
+    // set the player to fullscreen on double click     
      if(event.detail == 2) {
       toggleFullscreen()
     }
@@ -86,14 +94,14 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   }, []);
 
   useEffect(() => {
-    // initiate the first video player
+    // preload the first video when video paths are loaded
     if (videoPaths.length && videoPaths.length > 0) {
       setPlayerOnePath(getRandomVideoPath(videoPaths));
     }
   }, [videoPaths]);
 
   useEffect(() => {
-  // activate the video player, play the first video    
+  // play the first video when this component is activated by parent 
     if(isActive) {
       setIsPlayerOnePlaying(true)
     }
@@ -109,7 +117,7 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
         isMuted={isMuted}
         className={joinStyles([
           "video-player",
-          isPlayerOnePlaying
+          activePlayer == 1
             ? "video-player-active"
             : "video-player-inactive",
         ])}
@@ -121,7 +129,7 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
         isMuted={isMuted}
         className={joinStyles([
           "video-player",
-          isPlayerTwoPlaying
+          activePlayer == 2
             ? "video-player-active"
             : "video-player-inactive",
         ])}
