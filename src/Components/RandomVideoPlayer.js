@@ -1,13 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import useToggleFullscreen from "Hooks/useToggleFullscreen"
 import VideoPlayer from "Components/VideoPlayer";
-import {
-  VIDEO_ERROR_UI_MESSAGES,
-  UNKNOWN_ERROR_UI_MESSAGE,
-} from "Constants/constants";
 import { joinStyles } from "Utils/dev.js";
 import "Stylesheets/RandomVideoPlayer.scss";
-import { assert } from "Utils/error.js";
 
 const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   const [isPlayerOnePlaying, setIsPlayerOnePlaying] = useState(false);
@@ -100,12 +95,12 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   }
 
   useEffect(() => {
-    // get video srcs on component render
+    // get videos srcs on this component's render
     getVideoPaths();
   }, []);
 
   useEffect(() => {
-    // preload the first video when video paths are loaded
+    // preload the first video when the videos srcs are loaded
     if (videoPaths.length && videoPaths.length > 0) {
       setPlayerOnePath(getRandomVideoPath(videoPaths));
     }
@@ -123,6 +118,7 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
       className="random-video-player"
       ref={fullscreenRef}
       onClick={(e) => handleOnClick(e)}>
+      {/* player 1 */}
       <VideoPlayer
         isPlaying={isPlayerOnePlaying}
         isMuted={isMuted}
@@ -135,6 +131,7 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
         onPlayerProgressUpdate={handlePlayerOneProgressUpdate}
         src={playerOnePath}
       />
+      {/* player 2 */}      
       <VideoPlayer
         isPlaying={isPlayerTwoPlaying}
         isMuted={isMuted}
