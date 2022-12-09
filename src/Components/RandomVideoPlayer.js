@@ -13,7 +13,7 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   const [isPlayerTwoPathSet, setIsPlayerTwoPathSet] = useState(false);  
   const [activePlayer, setActivePlayer] = useState(1);
   const [videoPaths, setVideoPaths] = useState([]);
-  const [videoFormat, setVideoFormat] = useState("");
+  const [videoFormat, setVideoFormat] = useState("webm");
 
   const {fullscreenRef, toggleFullscreen} = useToggleFullscreen()
 
@@ -85,7 +85,9 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   };
 
   const handleOnSelectedVideoFormat = (format) => {
-    setVideoFormat(format)
+    // WIP: temporarily disabled, until mp4 files arer fixed
+    // always force webm format for now
+    //setVideoFormat(format)
   }
 
   const handleOnClick = (event) => {
