@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import useToggleFullscreen from "Hooks/useToggleFullscreen"
 import VideoPlayer from "Components/VideoPlayer";
 import { joinStyles } from "Utils/dev.js";
@@ -35,7 +35,7 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   const getRandomVideoPath = () => {
     const randomIndex = Math.floor(Math.random() * videoPaths.length);
     const srcs = videoPaths[randomIndex];
-    if(videoFormat == "webm") {
+    if(videoFormat === "webm") {
       return srcs[0] 
     } else {
       return srcs[1]
@@ -90,15 +90,15 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
 
   const handleOnClick = (event) => {
      // toggle play/pause of the active video player on single click
-     if(event.detail == 1) {
-      if(activePlayer == 1) {
+     if(event.detail === 1) {
+      if(activePlayer === 1) {
         setIsPlayerOnePlaying(prevState => !prevState)
       } else {
         setIsPlayerTwoPlaying(prevState => !prevState)
       }
      }
     // toggle fullscreen on double click     
-     if(event.detail == 2) {
+     if(event.detail === 2) {
       toggleFullscreen()
     }
   }
@@ -133,7 +133,7 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
         isMuted={isMuted}
         className={joinStyles([
           "video-player",
-          activePlayer == 1
+          activePlayer === 1
             ? "video-player-active"
             : "video-player-inactive",
         ])}
@@ -147,7 +147,7 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
         isMuted={isMuted}
         className={joinStyles([
           "video-player",
-          activePlayer == 2
+          activePlayer === 2
             ? "video-player-active"
             : "video-player-inactive",
         ])}

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { handlePromise } from "Utils/promise";
 
 const useVideoPlayer = (videoElementRef) => {
-  const [autoplayFinished, setAutoplayFinished] = useState(false);
   const [playerState, setPlayerState] = useState({
     isPlaying: false,
     time: 0,
