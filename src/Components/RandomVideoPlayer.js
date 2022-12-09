@@ -39,43 +39,53 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   const getRandomVideoPath = (paths) => {
     const randomIndex = Math.floor(Math.random() * paths.length);
     const path = paths[randomIndex];
-    console.log(path);
     return path;
   };
 
   const handlePlayerOneProgressUpdate = (progress) => {
+    // start loading the other video when the first is 50% finished
     if (progress > 0.5 && !isPlayerTwoPathSet) {
-      // start loading the other video when the first is 50% finished
+      // set the src path to preload the other player's video      
       setPlayerTwoPath(getRandomVideoPath(videoPaths))
       setIsPlayerTwoPathSet(true);
     }
+    // show the other video player when this player's video is finished
     if (progress >= 1.0 && isPlayerOnePlaying && !isPlayerTwoPlaying) {
-      // show the other player     
       console.log("showing player 2");
+      // pause this video player
       setIsPlayerOnePlaying(false);
+      // start the other one
       setIsPlayerTwoPlaying(true);
-      setActivePlayer(2)            
+      // keep track of which player is currently active
+      setActivePlayer(2)
+      // keep track whether this player has video src set
       setIsPlayerTwoPathSet(false);
     }
   };
 
   const handlePlayerTwoProgressUpdate = (progress) => {
+    // start loading the other video when the first is 50% finished    
     if (progress > 0.5 && !isPlayerOnePathSet) {
-      // start loading the other video when the first is 50% finished      
+      // set the src path to preload the other player's video      
       setPlayerOnePath(getRandomVideoPath(videoPaths));
       setIsPlayerOnePathSet(true);      
     }
+    // show the other video player when this player's video is finished    
     if (progress >= 1.0 && !isPlayerOnePlaying && isPlayerTwoPlaying) {
-      // show the other player           
       console.log("showing player 1");
-      setIsPlayerTwoPlaying(false);      
+      // pause this video player      
+      setIsPlayerTwoPlaying(false);  
+      // start the other one          
       setIsPlayerOnePlaying(true);
+      // keep track of which player is currently active      
       setActivePlayer(1)
+      // keep track whether this player has video src set
       setIsPlayerOnePathSet(false);      
     }
   };
 
   const handleOnClick = (event) => {
+     // toggle play/pause of the active video player on single click
      if(event.detail == 1) {
       if(activePlayer == 1) {
         setIsPlayerOnePlaying(prevState => !prevState)
@@ -83,13 +93,14 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
         setIsPlayerTwoPlaying(prevState => !prevState)
       }
      }
-    // set the player to fullscreen on double click     
+    // toggle fullscreen on double click     
      if(event.detail == 2) {
       toggleFullscreen()
     }
   }
 
   useEffect(() => {
+    // get video srcs on component render
     getVideoPaths();
   }, []);
 

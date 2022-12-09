@@ -36,17 +36,6 @@ const VideoPlayer = ({
     updateIsPlaying(isPlaying)
   }, [isPlaying])
 
-  // const handleOnClick = (event) => {
-  //   if(event.detail == 1) {
-  //     console.log(event.detail)
-  //     if(playerState.isPlaying) {
-  //       updateIsPlaying(false)
-  //     } else {
-  //       updateIsPlaying(true)
-  //     }
-  //   }
-  // }
-
   return (
     <video
       ref={videoPlayerRef}
