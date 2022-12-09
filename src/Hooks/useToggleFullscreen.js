@@ -1,22 +1,9 @@
 import { useRef, useState } from 'react';
+import {handlePromise} from "Utils/promise";
 
 const useToggleFullscreen = () => {
   const [isFullscreen, setIsFullscreen] = useState(false)
   const fullscreenRef = useRef(null)
-
-  const handlePromise = (promise, callback) => {
-      if (promise !== undefined) {
-        promise
-          .then(() => {
-            if(callback && typeof callback === "function") {
-              callback()
-            }
-          })
-          .catch(function (error) {
-            console.log(error)
-          });
-      }    
-  }
 
   const enterFullscreen = () => {
     if (fullscreenRef.current) {

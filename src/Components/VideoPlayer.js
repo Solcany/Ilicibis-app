@@ -14,11 +14,8 @@ const VideoPlayer = ({
 
   const {
     playerState,
-    playerErrorName,
-    togglePlay,
-    updateIsPlaying,
+    setIsPlaying,
     handleOnTimeUpdate,
-    handleVideoProgress,
     handleOnLoadedMetadata,
   } = useVideoPlayer(videoPlayerRef);
 
@@ -33,7 +30,7 @@ const VideoPlayer = ({
 
   useEffect(() => {
     // video player can be controlled via parent
-    updateIsPlaying(isPlaying)
+    setIsPlaying(isPlaying)
   }, [isPlaying])
 
   return (

@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
+import { handlePromise } from "Utils/promise";
 
 const useVideoPlayer = (videoElementRef) => {
   const [autoplayFinished, setAutoplayFinished] = useState(false);
-  const [playerErrorName, setPlayerErrorName] = useState("");
-
   const [playerState, setPlayerState] = useState({
     isPlaying: false,
     time: 0,
@@ -23,44 +22,9 @@ const useVideoPlayer = (videoElementRef) => {
     });
   };
 
-  const updateIsPlaying = (isPlaying) => {
-    setPlayerState({
-      ...playerState,
-      isPlaying: isPlaying,
-    });
-  };
-
   const handleOnTimeUpdate = () => {
     const time = videoElementRef.current.currentTime;
-    const progress =
-      videoElementRef.current.currentTime / videoElementRef.current.duration;
-    /* Pause the autoplayed video when clip is over,
-      if the video isn't a clip play the whole video */
-    // if (
-    //   videoEndTime > 0 && // does video have end time?
-    //   !autoplayFinished && // has the clip segment of the video been played already?
-    //   isVideoEnded(videoEndTime) // has the EndTime of the video been reached?
-    // ) {
-    //   setPlayerState({
-    //     ...playerState,
-    //     isPlaying: false,
-    //     time,
-    //     progress,
-    //   });
-    //   // clip video will be autoplayed and paused only once
-    //   setAutoplayFinished(true);
-    //   // if the video isn't a clip autoplay it in its entirety
-    // } else {
-
-    // if(progress >= 1.0) {
-    //   setPlayerState({
-    //     ...playerState,
-    //     isPlaying: false,
-    //     time,
-    //     progress,
-    //   });
-    // } else {
-
+    const progress = videoElementRef.current.currentTime / videoElementRef.current.duration;
     if (time && progress) {
       setPlayerState({
         ...playerState,
@@ -68,77 +32,31 @@ const useVideoPlayer = (videoElementRef) => {
         progress,
       });
     }
-    // }
-
-    // }
   };
 
-  // const handleVideoProgress = (progress) => {
-  //   const time = videoElement.current.currentTime;
-  //   const manualChange = Number(progress);
-  //   videoElement.current.currentTime =
-  //     (videoElement.current.duration / 1000) * manualChange;
-  //   setPlayerState({
-  //     ...playerState,
-  //     time,
-  //     progress: manualChange,
-  //   });
-  // };
-
-  // const handleVideoSpeed = (event) => {
-  //   const speed = Number(event.target.value);
-  //   videoElement.current.playbackRate = speed;
-  //   setPlayerState({
-  //     ...playerState,
-  //     speed,
-  //   });
-  // };
-
+  const setIsPlaying = (isPlaying) => {
+    setPlayerState({
+      ...playerState,
+      isPlaying: isPlaying,
+    });
+  };
+  // WIP: should be wrapped in custom hook
   useEffect(() => {
-    // is video player initialized?
+    // toggle play/pause
     if (playerState.isPlaying && videoElementRef.current.play ) {
-      // // play video
+      // play video
       let playPromise = videoElementRef.current.play();
-      // // is promise supported?
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log("playing!")
-          })
-          .catch(function (error) {
-            console.log(error)
-            setPlayerErrorName(error.name);
-          });
-      }
+      handlePromise(playPromise, () => console.log("video playing"))
     } else {
+      // pause it
       videoElementRef.current.pause();
     }
   }, [playerState.isPlaying]);
 
-  // useEffect(() => {
-  //   if (videoElement.current) {
-  //     if (playerState.isMuted) {
-  //       videoElement.current.muted = true;
-  //     } else {
-  //       videoElement.current.muted = false;
-  //     }
-  //   }
-  // }, [playerState.isMuted, videoElement]);
-
-  // useEffect(() => {
-  //   setPlayerState({
-  //     ...playerState,
-  //     isMuted: isAppMuted,
-  //   });
-  // }, [isAppMuted]);
-
   return {
     playerState,
-    // playerErrorName,
-    // togglePlay,
+    setIsPlaying,    
     handleOnTimeUpdate,
-    updateIsPlaying,
-    // handleVideoProgress,
     handleOnLoadedMetadata,
   };
 };
