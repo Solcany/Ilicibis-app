@@ -1,4 +1,21 @@
+@use "Stylesheets/Constants.scss";
+
 .video-player {
-  width: 100%;
-  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+
+  @include Constants.breakpoint-orientation-vertical() {
+    width: 100%;
+    height: auto;
+    object-fit: none;
+  }    
+
+  &.video-player-active {
+    display: block;
+  }
+
+  &.video-player-inactive {
+    display: none;
+  }
 }
