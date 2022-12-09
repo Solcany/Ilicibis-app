@@ -14,33 +14,35 @@ const VideoPlayer = ({
 
   const {
     playerState,
-    playerErrorName,
-    togglePlay,
+    setIsPlaying,
     handleOnTimeUpdate,
-    handleVideoProgress,
     handleOnLoadedMetadata,
-  } = useVideoPlayer(isPlaying, videoPlayerRef);
+  } = useVideoPlayer(videoPlayerRef);
 
   const progress = playerState.progress;
 
   useEffect(() => {
+    // pass the video player progress to the parent
     if (progress) {
       onPlayerProgressUpdate(progress);
     }
   }, [progress]);
 
+  useEffect(() => {
+    // video player can be controlled via parent
+    setIsPlaying(isPlaying)
+  }, [isPlaying])
+
   return (
     <video
       ref={videoPlayerRef}
-      src={src}
-      preload="auto"
-      className={joinStyles(["video-player", className])}
       onLoadedMetadata={() => handleOnLoadedMetadata()}
-      poster=""
-      autoPlay={isPlaying}
-      onTimeUpdate={() => handleOnTimeUpdate()}
-      // title="ilicibis player"
-      muted={isMuted}
+      onTimeUpdate={() => handleOnTimeUpdate()}         
+      src={src}
+      autoPlay={false}    
+      muted={isMuted}        
+      preload="auto"
+      className={joinStyles(["video-player", className])}      
     />
   );
 };
