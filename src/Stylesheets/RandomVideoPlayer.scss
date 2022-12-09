@@ -1,20 +1,3 @@
-@use "Stylesheets/Constants.scss";
-
 .random-video-player {
   width: 100%;
-  position: relative;
-
-  .video-player {
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-
-    &.video-player-active {
-      display: block;
-    }
-
-    &.video-player-inactive {
-      display: none;
-    }
-  }
 }
