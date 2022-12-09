@@ -40,6 +40,7 @@ const useVideoPlayer = (videoElementRef) => {
       isPlaying: isPlaying,
     });
   };
+
   // WIP: should be wrapped in custom hook
   useEffect(() => {
     // toggle play/pause
