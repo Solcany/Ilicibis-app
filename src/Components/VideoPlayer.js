@@ -4,9 +4,10 @@ import { joinStyles } from "Utils/dev.js";
 import "Stylesheets/VideoPlayer.scss";
 
 const VideoPlayer = ({
+  onPlayerProgressUpdate,
+  onSelectedVideoFormat, 
   src,
   className,
-  onPlayerProgressUpdate,
   isMuted = true,
   isPlaying = false,
 }) => {
@@ -21,6 +22,20 @@ const VideoPlayer = ({
 
   const progress = playerState.progress;
 
+  const selectVideoFormat = () => {
+    // select video src with appropriate video format
+    if(onSelectedVideoFormat && videoPlayerRef.current) {
+      // prioritize webm
+      if(videoPlayerRef.current.canPlayType('video/webm')) {
+        // webm
+        onSelectedVideoFormat("webm")
+      } else {
+        // mp4
+        onSelectedVideoFormat("mp4")
+      }
+    }
+  }
+
   useEffect(() => {
     // pass the video player progress to the parent
     if (progress) {
@@ -29,21 +44,25 @@ const VideoPlayer = ({
   }, [progress]);
 
   useEffect(() => {
-    // video player can be controlled via parent
+    // control play/pause via parent
     setIsPlaying(isPlaying)
   }, [isPlaying])
+
+  useEffect(() => {
+    selectVideoFormat()
+  },[])
+
 
   return (
     <video
       ref={videoPlayerRef}
       onLoadedMetadata={() => handleOnLoadedMetadata()}
       onTimeUpdate={() => handleOnTimeUpdate()}         
-      src={src}
       autoPlay={false}    
       muted={isMuted}        
       preload="auto"
-      className={joinStyles(["video-player", className])}      
-    />
+      className={joinStyles(["video-player", className])}
+      src={src}/>
   );
 };
 

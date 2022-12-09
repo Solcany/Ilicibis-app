@@ -3,10 +3,6 @@ import ModalCard from "Components/ModalCard";
 import Button from "Components/Button";
 import Header from "Components/Header";
 import RandomVideoPlayer from "Components/RandomVideoPlayer";
-import {
-  VIDEO_ERROR_UI_MESSAGES,
-  UNKNOWN_ERROR_UI_MESSAGE,
-} from "Constants/constants";
 import "Stylesheets/Reset.scss";
 import "Stylesheets/App.scss";
 

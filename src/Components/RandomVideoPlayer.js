@@ -13,6 +13,7 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
   const [isPlayerTwoPathSet, setIsPlayerTwoPathSet] = useState(false);  
   const [activePlayer, setActivePlayer] = useState(1);
   const [videoPaths, setVideoPaths] = useState([]);
+  const [videoFormat, setVideoFormat] = useState("");
 
   const {fullscreenRef, toggleFullscreen} = useToggleFullscreen()
 
@@ -30,18 +31,22 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
         setVideoPaths(json.videos);
       });
   };
-
-  const getRandomVideoPath = (paths) => {
-    const randomIndex = Math.floor(Math.random() * paths.length);
-    const path = paths[randomIndex];
-    return path;
+ 
+  const getRandomVideoPath = () => {
+    const randomIndex = Math.floor(Math.random() * videoPaths.length);
+    const srcs = videoPaths[randomIndex];
+    if(videoFormat == "webm") {
+      return srcs[0] 
+    } else {
+      return srcs[1]
+    }
   };
 
-  const handlePlayerOneProgressUpdate = (progress) => {
+  const handleOnPlayerOneProgressUpdate = (progress) => {
     // start loading the other video when the first is 50% finished
     if (progress > 0.5 && !isPlayerTwoPathSet) {
       // set the src path to preload the other player's video      
-      setPlayerTwoPath(getRandomVideoPath(videoPaths))
+      setPlayerTwoPath(getRandomVideoPath())
       setIsPlayerTwoPathSet(true);
     }
     // show the other video player when this player's video is finished
@@ -58,11 +63,11 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
     }
   };
 
-  const handlePlayerTwoProgressUpdate = (progress) => {
+  const handleOnPlayerTwoProgressUpdate = (progress) => {
     // start loading the other video when the first is 50% finished    
     if (progress > 0.5 && !isPlayerOnePathSet) {
       // set the src path to preload the other player's video      
-      setPlayerOnePath(getRandomVideoPath(videoPaths));
+      setPlayerOnePath(getRandomVideoPath());
       setIsPlayerOnePathSet(true);      
     }
     // show the other video player when this player's video is finished    
@@ -78,6 +83,10 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
       setIsPlayerOnePathSet(false);      
     }
   };
+
+  const handleOnSelectedVideoFormat = (format) => {
+    setVideoFormat(format)
+  }
 
   const handleOnClick = (event) => {
      // toggle play/pause of the active video player on single click
@@ -128,7 +137,8 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
             ? "video-player-active"
             : "video-player-inactive",
         ])}
-        onPlayerProgressUpdate={handlePlayerOneProgressUpdate}
+        onPlayerProgressUpdate={handleOnPlayerOneProgressUpdate}
+        onSelectedVideoFormat={handleOnSelectedVideoFormat}
         src={playerOnePath}
       />
       {/* player 2 */}      
@@ -141,7 +151,7 @@ const RandomVideoPlayer = ({ isMuted, isActive=false }) => {
             ? "video-player-active"
             : "video-player-inactive",
         ])}
-        onPlayerProgressUpdate={handlePlayerTwoProgressUpdate}
+        onPlayerProgressUpdate={handleOnPlayerTwoProgressUpdate}
         src={playerTwoPath}
       />
     </div>
