@@ -63,7 +63,7 @@ const VideoPlayer = ({
       preload="auto"
       className={joinStyles(["video-player", className])}
       src={src}
-      playsinline/>
+      playsInline/>
   );
 };
 
