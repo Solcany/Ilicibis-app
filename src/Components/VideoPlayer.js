@@ -62,7 +62,8 @@ const VideoPlayer = ({
       muted={isMuted}        
       preload="auto"
       className={joinStyles(["video-player", className])}
-      src={src}/>
+      src={src}
+      playsinline/>
   );
 };
 
